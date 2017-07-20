@@ -26,7 +26,7 @@ func newTemplate(args ...string) (*template.Template, error) {
 const validatorHeaderT = `{{- define "validator_header" -}}
 // This module exports functions that validate {{ .API.Name }} API params hosted at {{ .API.Host }}.
 {{      if eq "flow" .Target }}// @flow
-{{ else if eq "type" .Target }}///<reference path="api.d.ts" />
+{{ else if eq "typescript" .Target }}///<reference path="api.d.ts" />
 {{- end }}
 {{ end }}
 `
@@ -47,7 +47,7 @@ export const InvalidMaxLengthError = "length is exceeded";
 export const InvalidKindError = "invalid kind";
 {{      if eq "flow" .Target }}export function validate(rule: any, actual: any) {
   let errors = {};
-{{ else if eq "type" .Target }}export function validate(rule: any, actual: any): ErrorMap | undefined {
+{{ else if eq "typescript" .Target }}export function validate(rule: any, actual: any): ErrorMap | undefined {
   let errors: ErrorMap = {};
 {{ else }}export function validate(rule, actual) {
   let errors = {};
@@ -130,7 +130,7 @@ const jsHeaderT = `{{- define "js_header" -}}
 // This module exports functions that give access to the {{ .API.Name }} API hosted at {{ .API.Host }}.
 {{      if eq "flow" .Target }}// @flow
 import * as v from "./api_validator.js";
-{{ else if eq "type" .Target }}///<reference path="api.d.ts" />
+{{ else if eq "typescript" .Target }}///<reference path="api.d.ts" />
 import * as v from "./api_validator.ts";
 {{ else }}
 import * as v from "./api_validator.js";
@@ -147,7 +147,7 @@ const urlPrefix = scheme + '://' + host;
 const jsModuleT = `{{ define "js_module" }}
 // helper function for GET method.
 {{      if eq "flow" .Target }}function get(url: string, payload?: any): Promise<any> {
-{{ else if eq "type" .Target }}function get(url: string, payload?: any): Promise<any> {
+{{ else if eq "typescript" .Target }}function get(url: string, payload?: any): Promise<any> {
 {{ else }}function get(url, payload) {
 {{- end }}
   const query = queryBuilder(payload);
@@ -162,7 +162,7 @@ const jsModuleT = `{{ define "js_module" }}
 
 // helper function for POST method.
 {{      if eq "flow" .Target }}function post(url: string, payload?: any): Promise<any> {
-{{ else if eq "type" .Target }}function post(url: string, payload?: any): Promise<any> {
+{{ else if eq "typescript" .Target }}function post(url: string, payload?: any): Promise<any> {
 {{ else }}function post(url, payload) {
 {{- end }}
   return fetch(url, {
@@ -177,7 +177,7 @@ const jsModuleT = `{{ define "js_module" }}
 
 // helper functon which return QueryParameter from Object.
 {{      if eq "flow" .Target }}function queryBuilder(obj: any): string {
-{{ else if eq "type" .Target }}function queryBuilder(obj: any): string {
+{{ else if eq "typescript" .Target }}function queryBuilder(obj: any): string {
 {{ else }}function queryBuilder(obj) {
 {{- end }}
   if (!obj) {
