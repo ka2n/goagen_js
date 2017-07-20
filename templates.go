@@ -131,7 +131,7 @@ const jsHeaderT = `{{- define "js_header" -}}
 {{      if eq "flow" .Target }}// @flow
 import * as v from "./api_validator.js";
 {{ else if eq "typescript" .Target }}///<reference path="api.d.ts" />
-import * as v from "./api_validator.ts";
+import * as v from "./api_validator";
 {{ else }}
 import * as v from "./api_validator.js";
 {{- end }}
